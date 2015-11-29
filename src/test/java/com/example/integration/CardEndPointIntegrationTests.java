@@ -1,5 +1,6 @@
-package com.example;
+package com.example.integration;
 
+import com.example.SpringDemoApplication;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
@@ -62,7 +63,6 @@ public class CardEndPointIntegrationTests {
     @Test
     @ExpectedDatabase(value = "/cardDataAfterAdd.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldSaveNewCard() throws Exception {
-
 
         mockMvc.perform(
                 post("/cards")

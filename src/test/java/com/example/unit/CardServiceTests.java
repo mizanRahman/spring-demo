@@ -1,5 +1,6 @@
-package com.example;
+package com.example.unit;
 
+import com.example.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,9 +25,8 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SpringApplicationConfiguration(classes = SpringDemoApplication.class)
-@WebAppConfiguration
 @ActiveProfiles("test")
-public class CardServiceTest {
+public class CardServiceTests {
 
     @Mock
     private CardRepository cardRepository;

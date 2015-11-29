@@ -24,5 +24,6 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<Card> findAll() {
         return cardRepository.findAll();
+
     }
 }
