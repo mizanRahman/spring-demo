@@ -1,5 +1,6 @@
 package com.example;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Card save(Card card) {
+        card.setExpiryDate(DateTime.now().plusDays(5).toDate());
         return cardRepository.save(card);
     }
 

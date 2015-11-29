@@ -22,13 +22,15 @@ public class CardEndPoint {
 
     @RequestMapping
     public List<Card> findAll() {
-        log.info("------------------findAll called----------------");
-        return cardService.findAll();
+        List<Card> cards = cardService.findAll();
+        log.info("total {} cards found", cards.size());
+        return cards;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody Card card) {
-        cardService.save(card);
+        Card savedCard = cardService.save(card);
+        log.info("card saved. id: {}", savedCard.getId());
     }
 
     @RequestMapping("/schema")
