@@ -10,10 +10,20 @@ buildscript {
     }
 }
 
+//plugins {
+//    id "org.flywaydb.flyway" version "3.2"
+//}
+
+//flyway {
+//    url = 'jdbc:h2:mem:testdb'
+//    user = 'sa'
+//}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+
 
 jar {
     baseName = 'demo'
@@ -30,15 +40,23 @@ repositories {
 
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
     compile('org.projectlombok:lombok')
     compile('joda-time:joda-time')
 
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
     compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-devtools")
 
     runtime('com.h2database:h2')
-    testCompile('org.springframework.boot:spring-boot-starter-test') 
+    compile('postgresql:postgresql:9.1-901-1.jdbc4')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.dbunit:dbunit:2.5.1')
+    testCompile('com.github.springtestdbunit:spring-test-dbunit:1.2.1')
+
 }
 
 dependencyManagement {

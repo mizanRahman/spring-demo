@@ -10,12 +10,12 @@ import java.util.Date;
 /**
  * Created by mac on 11/28/15.
  */
-@Entity
+@Entity(name = "cards")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Card extends BaseEntity {
 
-    @Column(name = "pan", unique = true, nullable = false, length = 16)
+    @Column(name = "pan", unique = true, nullable = false, length = 19)
     private String pan;
 
     @Column(name = "balance")

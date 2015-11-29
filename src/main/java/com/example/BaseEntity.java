@@ -20,11 +20,11 @@ public abstract class BaseEntity implements Serializable {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @Column(name = "updated", nullable = false)
+    @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
 
