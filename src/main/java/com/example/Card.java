@@ -1,38 +1,28 @@
 package com.example;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
 
 /**
  * Created by mac on 11/28/15.
  */
 @Entity
-public class Card implements Serializable {
+@Data
+public class Card {
 
     @Id
     @GeneratedValue
-    private long id;
-    @Column
+    @JsonIgnore
+    private Long id;
+
+    @Column(name = "pan", unique = true, nullable = false, length = 16)
     private String pan;
-    @Column
+
+    @Column(name = "balance")
     private long balance;
-
-    public String getPan() {
-        return pan;
-    }
-
-    public void setPan(String pan) {
-        this.pan = pan;
-    }
-
-    public long getBalance() {
-        return balance;
-    }
-
-    public void setBalance(long balance) {
-        this.balance = balance;
-    }
 }

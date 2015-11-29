@@ -1,0 +1,11 @@
+# plans:
+    - spring boot jpa
+    - lombok
+        - data
+        - log
+    - validation
+    - persistence exceptions
+    - database migrations
+    - unit tests
+    - functional test
+    -

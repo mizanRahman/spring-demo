@@ -1,12 +1,12 @@
 package com.example;
 
-import org.hibernate.mapping.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,17 +14,25 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/cards")
+@Slf4j
 public class CardEndPoint {
 
     @Autowired
-    private CardRepository repository;
+    private CardService cardService;
 
-    @RequestMapping("")
+    @RequestMapping
     public List<Card> findAll() {
-        Card card = new Card();
-        card.setBalance(2222);
-        card.setPan("23248543868436783");
-        repository.save(card);
-        return repository.findAll();
+        log.info("------------------findAll called----------------");
+        return cardService.findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public void save(@RequestBody Card card) {
+        cardService.save(card);
+    }
+
+    @RequestMapping("/schema")
+    public Card schema() {
+        return new Card();
     }
 }
