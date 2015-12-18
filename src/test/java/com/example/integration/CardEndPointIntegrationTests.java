@@ -34,7 +34,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringApplicationConfiguration(SpringDemoApplication.class)
 @WebIntegrationTest
 @ActiveProfiles("test")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+@TestExecutionListeners({
+        DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
@@ -52,7 +53,8 @@ public class CardEndPointIntegrationTests {
     }
 
     @Test
-    @ExpectedDatabase(value = "/cardData.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/cardData.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() throws Exception {
         mockMvc.perform(get("/cards"))
                 .andDo(print())
@@ -61,7 +63,8 @@ public class CardEndPointIntegrationTests {
 
 
     @Test
-    @ExpectedDatabase(value = "/cardDataAfterAdd.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldSaveNewCard() throws Exception {
 
         mockMvc.perform(

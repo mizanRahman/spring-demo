@@ -23,7 +23,9 @@ public class CommonExceptionHandler {
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
-    public ApiError exception(HttpServletRequest request, DataIntegrityViolationException exception) {
+    public ApiError exception(HttpServletRequest request,
+                              DataIntegrityViolationException exception) {
+
         log.warn("api error at: {} {}", request.getMethod(), request.getRequestURI(), exception);
         return ApiError.builder()
                 .errorCode("23232")

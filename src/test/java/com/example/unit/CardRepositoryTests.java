@@ -23,10 +23,12 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringDemoApplication.class)
+@SpringApplicationConfiguration(
+        classes = SpringDemoApplication.class)
 @ActiveProfiles("test")
 
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+@TestExecutionListeners({
+        DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
@@ -37,7 +39,8 @@ public class CardRepositoryTests {
     private CardRepository cardRepository;
 
     @Test
-    @ExpectedDatabase(value = "/cardDataAfterAdd.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void savetest() {
         Card card = new Card();
         card.setPan("3352732138298");

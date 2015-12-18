@@ -9,7 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringApplicationConfiguration(classes = SpringDemoApplication.class)
+@SpringApplicationConfiguration(
+        classes = SpringDemoApplication.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
 public class SpringDemoApplicationTests {
