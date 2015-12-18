@@ -34,10 +34,10 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringApplicationConfiguration(SpringDemoApplication.class)
 @WebIntegrationTest
 @ActiveProfiles("test")
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class })
+        DbUnitTestExecutionListener.class})
 @DatabaseSetup("/cardData.xml")
 public class CardEndPointIntegrationTests {
 
@@ -67,10 +67,10 @@ public class CardEndPointIntegrationTests {
         mockMvc.perform(
                 post("/cards")
                         .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"pan\": \"3352732138298\",\n" +
-                        "  \"balance\": 90\n" +
-                        "}"))
+                        .content("{\n" +
+                                "  \"pan\": \"3352732138298\",\n" +
+                                "  \"balance\": 90\n" +
+                                "}"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
