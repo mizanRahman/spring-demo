@@ -7,8 +7,8 @@ import java.util.List;
  */
 public interface CardService {
 
-    public Card save(Card card);
+    Card save(Card card);
 
-    public List<Card> findAll();
+    List<Card> findAll();
 
 }

@@ -23,7 +23,41 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public List<Card> findAll() {
+        test();
+        test2();
         return cardRepository.findAll();
 
     }
+
+    private boolean test() {
+        String string = "Madam, I am Adam";
+
+        boolean b = string.startsWith("Mad");  // true
+
+        b = string.endsWith("dam");             // true
+
+        b = string.matches("(?i)mad.*");
+
+        b = string.matches("(?i).*adam");
+
+        b = string.matches("(?i).*i am.*");
+        return b;
+
+    }
+
+    private boolean test2() {
+        String string = "Madam, I am Adam";
+
+        boolean b = string.startsWith("Mad");  // true
+
+        b = string.endsWith("dam");             // true
+
+        b = string.matches("(?i)mad.*");
+
+        b = string.matches("(?i).*adam");
+
+        b = string.matches("(?i).*i am.*");
+        return b;
+    }
+
 }
