@@ -42,11 +42,7 @@ public class CardRepositoryTests {
     @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void savetest() {
-        Card card = new Card();
-        card.setPan("3352732138298");
-        card.setBalance(90);
-
+        Card card = Card.builder().balance(90).pan("3352732138298").build();
         cardRepository.saveAndFlush(card);
-
     }
 }

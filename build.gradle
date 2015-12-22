@@ -60,6 +60,10 @@ dependencies {
     testCompile('org.dbunit:dbunit:2.5.1')
     testCompile('com.github.springtestdbunit:spring-test-dbunit:1.2.1')
 
+    testCompile 'com.jayway.restassured:rest-assured:2.8.0'
+    testCompile 'com.jayway.restassured:spring-mock-mvc:2.8.0'
+
+
 }
 
 dependencyManagement {
@@ -82,6 +86,7 @@ task wrapper(type: Wrapper) {
 
 
 pmd {
+    ignoreFailures =true
     ruleSetFiles = files('config/pmd/ruleSet.xml')
 }
 
@@ -99,6 +104,8 @@ pmd {
 //}
 
 tasks.withType(FindBugs) {
+    ignoreFailures =true
+
     reports {
         xml.enabled = false
         html.enabled = true

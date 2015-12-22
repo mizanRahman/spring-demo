@@ -1,7 +1,6 @@
 package com.example;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +14,9 @@ import java.util.Date;
 @Entity(name = "cards")
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Card extends BaseEntity {
 
     @Column(name = "pan", unique = true, nullable = false, length = 19)

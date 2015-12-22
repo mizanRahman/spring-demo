@@ -2,6 +2,7 @@ package com.example.integration;
 
 import com.example.SpringDemoApplication;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
@@ -39,7 +40,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup("/cardData.xml")
+@DatabaseSetup(value = "/cardData.xml",
+        type = DatabaseOperation.CLEAN_INSERT)
 public class CardEndPointIntegrationTests {
 
     @Autowired

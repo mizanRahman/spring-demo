@@ -1,16 +1,21 @@
 package com.example.integration;
 
+import com.example.Card;
 import com.example.SpringDemoApplication;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
@@ -19,13 +24,11 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.hamcrest.CoreMatchers.both;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Created by mac on 11/29/15.
@@ -39,26 +42,29 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup("/cardData.xml")
+@DatabaseSetup(value = "/cardData.xml",
+        type = DatabaseOperation.CLEAN_INSERT)
 public class UserEndPointIntegrationTests {
 
     @Autowired
-    private WebApplicationContext wac;
-
-    private MockMvc mockMvc;
+    private WebApplicationContext context;
 
     @Before
     public void before() {
-        this.mockMvc = webAppContextSetup(this.wac).build();
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        RestAssuredMockMvc.mockMvc(mockMvc);
     }
 
     @Test
     @ExpectedDatabase(value = "/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() throws Exception {
-        mockMvc.perform(get("/cards"))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+        RestAssured.when()
+                .get("/cards")
+                .then()
+                .log()
+                .everything()
+                .statusCode(HttpStatus.OK.value());
     }
 
 
@@ -66,31 +72,24 @@ public class UserEndPointIntegrationTests {
     @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldSaveNewCard() throws Exception {
-
-        mockMvc.perform(
-                post("/cards")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "  \"pan\": \"3352732138298\",\n" +
-                                "  \"balance\": 90\n" +
-                                "}"))
-                .andDo(print())
-                .andExpect(status().is2xxSuccessful());
+        Card card = Card.builder().balance(90).pan("3352732138298").build();
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .body(card)
+                .when().post("/cards")
+                .then().log().everything().statusCode(HttpStatus.OK.value());
     }
 
     @Test
     public void shouldReturnErrorJson() throws Exception {
-
-
-        mockMvc.perform(
-                post("/cards")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "  \"pan\": \"335273211412412412412421412412\",\n" +
-                                "  \"balance\": 90\n" +
-                                "}"))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
+        Card card = Card.builder().balance(90).pan("33527321141241241255412421412412").build();
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .body(card)
+                .when().post("/cards")
+                .then().log().everything()
+                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
     }
-
 }

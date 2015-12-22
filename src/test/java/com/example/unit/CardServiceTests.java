@@ -44,9 +44,7 @@ public class CardServiceTests {
                     }
                 });
 
-        Card card = new Card();
-        card.setBalance(212);
-        card.setPan("374632786");
+        Card card = Card.builder().balance(212).pan("374632786").build();
 
         Card savedCard = cardService.save(card);
 

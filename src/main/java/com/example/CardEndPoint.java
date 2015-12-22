@@ -35,6 +35,6 @@ public class CardEndPoint {
 
     @RequestMapping("/schema")
     public Card schema() {
-        return new Card();
+        return Card.builder().build();
     }
 }
