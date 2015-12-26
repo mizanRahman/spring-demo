@@ -1,4 +1,4 @@
-package com.example;
+package com.example.ep.model;
 
 import lombok.Builder;
 import lombok.Data;

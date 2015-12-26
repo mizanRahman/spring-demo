@@ -1,5 +1,6 @@
-package com.example;
+package com.example.core.repository;
 
+import com.example.core.domain.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

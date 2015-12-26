@@ -1,5 +1,8 @@
-package com.example;
+package com.example.core.service;
 
+import com.example.core.repository.CardRepository;
+import com.example.core.domain.Card;
+import com.example.core.service.CardService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

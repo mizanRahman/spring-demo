@@ -1,0 +1,32 @@
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+
+
+pmd {
+    ignoreFailures =true
+    ruleSetFiles = files('config/pmd/ruleSet.xml')
+}
+
+//check << {
+//    File outDir = new File('build/reports/pmd/')
+//    outDir.mkdirs()
+//    ant.taskdef(name: 'cpd', classname: 'net.sourceforge.pmd.cpd.CPDTask',
+//            classpath: configurations.pmd.asPath)
+//    ant.cpd(minimumTokenCount: '100', format: 'xml',
+//            outputFile: new File(outDir, 'cpd.xml')) {
+//        fileset(dir: "src/main/java") {
+//            include(name: '**/*.java')
+//        }
+//    }
+//}
+
+tasks.withType(FindBugs) {
+    ignoreFailures =true
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+

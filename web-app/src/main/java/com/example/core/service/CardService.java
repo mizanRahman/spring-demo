@@ -1,4 +1,6 @@
-package com.example;
+package com.example.core.service;
+
+import com.example.core.domain.Card;
 
 import java.util.List;
 

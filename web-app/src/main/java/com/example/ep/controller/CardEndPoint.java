@@ -1,5 +1,7 @@
-package com.example;
+package com.example.ep.controller;
 
+import com.example.CardService;
+import com.example.core.domain.Card;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
