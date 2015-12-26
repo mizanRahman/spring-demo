@@ -26,10 +26,16 @@ public class CommonExceptionHandler {
     public ApiError exception(HttpServletRequest request,
                               DataIntegrityViolationException exception) {
 
-        log.warn("api error at: {} {}", request.getMethod(), request.getRequestURI(), exception);
+        log.warn("api error @{} {} : {}",
+                request.getMethod(),
+                request.getRequestURI(),
+                exception.getMostSpecificCause().getMessage(),
+                exception);
+
         return ApiError.builder()
                 .errorCode("23232")
-                .message(exception.getMessage())
-                .status("error").build();
+                .message("error while database operation")
+                .status("error")
+                .build();
     }
 }

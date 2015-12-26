@@ -8,6 +8,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -42,7 +43,10 @@ public class CardRepositoryTests {
     @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void savetest() {
-        Card card = Card.builder().balance(90).pan("3352732138298").build();
+        Card card = Card.builder()
+                .balance(90)
+                .pan("3352732138298")
+                .build();
         cardRepository.saveAndFlush(card);
     }
 }

@@ -62,8 +62,6 @@ dependencies {
 
     testCompile 'com.jayway.restassured:rest-assured:2.8.0'
     testCompile 'com.jayway.restassured:spring-mock-mvc:2.8.0'
-
-
 }
 
 dependencyManagement {

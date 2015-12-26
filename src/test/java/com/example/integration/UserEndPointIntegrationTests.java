@@ -72,7 +72,11 @@ public class UserEndPointIntegrationTests {
     @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldSaveNewCard() throws Exception {
-        Card card = Card.builder().balance(90).pan("3352732138298").build();
+        Card card = Card.builder()
+                .balance(90)
+                .pan("3352732138298")
+                .build();
+
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
@@ -82,8 +86,51 @@ public class UserEndPointIntegrationTests {
     }
 
     @Test
+    @ExpectedDatabase(value = "/cardData.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturnErrorJson() throws Exception {
-        Card card = Card.builder().balance(90).pan("33527321141241241255412421412412").build();
+        Card card = Card.builder()
+                .balance(90)
+                .pan("3352732114124124125541242141")
+                .build();
+
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .body(card)
+                .when().post("/cards")
+                .then().log().everything()
+                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
+    }
+
+
+    @Test
+    @ExpectedDatabase(value = "/cardData.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
+    public void shouldReturnErrorJsonForIntegrityViolation() throws Exception {
+        Card card = Card.builder()
+                .balance(90)
+                .pan("3352732114124124125541242141")
+                .build();
+
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .body(card)
+                .when().post("/cards")
+                .then().log().everything()
+                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
+    }
+
+    @Test
+    @ExpectedDatabase(value = "/cardData.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
+    public void shouldReturnErrorJsonForUniqueKeyViolation() throws Exception {
+        Card card = Card.builder()
+                .balance(90)
+                .pan("121324344")
+                .build();
+
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
