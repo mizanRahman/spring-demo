@@ -1,6 +1,5 @@
 package com.example.core.domain;
 
-import com.example.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Column;

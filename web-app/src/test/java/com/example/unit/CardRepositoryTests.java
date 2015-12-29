@@ -1,14 +1,13 @@
 package com.example.unit;
 
-import com.example.Card;
-import com.example.CardRepository;
+import com.example.core.domain.Card;
+import com.example.core.repository.CardRepository;
 import com.example.SpringDemoApplication;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;

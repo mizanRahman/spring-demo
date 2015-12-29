@@ -1,6 +1,10 @@
 package com.example.unit;
 
-import com.example.*;
+import com.example.SpringDemoApplication;
+import com.example.core.repository.CardRepository;
+import com.example.core.domain.Card;
+import com.example.core.service.CardService;
+import com.example.core.service.CardServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
