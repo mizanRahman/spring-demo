@@ -1,7 +1,7 @@
 package com.example.integration;
 
-import com.example.core.domain.Card;
 import com.example.SpringDemoApplication;
+import com.example.core.domain.Card;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -25,6 +25,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.CoreMatchers.both;
@@ -42,9 +43,11 @@ import static org.hamcrest.Matchers.*;
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/cardData.xml",
+@DatabaseSetup(value = "/dbunit/cardData.xml",
         type = DatabaseOperation.CLEAN_INSERT)
 public class UserEndPointIntegrationTests {
+
+    private static String UNUSED = "3212312";
 
     @Autowired
     private WebApplicationContext context;
@@ -56,9 +59,9 @@ public class UserEndPointIntegrationTests {
     }
 
     @Test
-    @ExpectedDatabase(value = "/cardData.xml",
+    @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldReturn200OK() throws Exception {
+    public void shouldReturn200OK() {
         RestAssured.when()
                 .get("/cards")
                 .then()
@@ -69,9 +72,9 @@ public class UserEndPointIntegrationTests {
 
 
     @Test
-    @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
+    @ExpectedDatabase(value = "/dbunit/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldSaveNewCard() throws Exception {
+    public void shouldSaveNewCard() {
         Card card = Card.builder()
                 .balance(90)
                 .pan("3352732138298")
@@ -85,29 +88,11 @@ public class UserEndPointIntegrationTests {
                 .then().log().everything().statusCode(HttpStatus.OK.value());
     }
 
-    @Test
-    @ExpectedDatabase(value = "/cardData.xml",
-            assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldReturnErrorJson() throws Exception {
-        Card card = Card.builder()
-                .balance(90)
-                .pan("3352732114124124125541242141")
-                .build();
-
-        RestAssured
-                .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
-                .body(card)
-                .when().post("/cards")
-                .then().log().everything()
-                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
-    }
-
 
     @Test
-    @ExpectedDatabase(value = "/cardData.xml",
+    @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldReturnErrorJsonForIntegrityViolation() throws Exception {
+    public void shouldReturnErrorJsonForIntegrityViolation() {
         Card card = Card.builder()
                 .balance(90)
                 .pan("3352732114124124125541242141")
@@ -123,9 +108,9 @@ public class UserEndPointIntegrationTests {
     }
 
     @Test
-    @ExpectedDatabase(value = "/cardData.xml",
+    @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
-    public void shouldReturnErrorJsonForUniqueKeyViolation() throws Exception {
+    public void shouldReturnErrorJsonForAlreadyExistsPan() {
         Card card = Card.builder()
                 .balance(90)
                 .pan("121324344")
@@ -137,6 +122,50 @@ public class UserEndPointIntegrationTests {
                 .body(card)
                 .when().post("/cards")
                 .then().log().everything()
-                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
+                .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+
+
+    @Test
+    @ExpectedDatabase(value = "/dbunit/cardDataAfterEdit.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
+    public void shouldUpdateCardSuccessfully() {
+        Card card = Card.builder()
+                .balance(120)
+                .pan("1122334455")
+                .build();
+
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .body(card)
+                .when().put("/cards/{id}", 1)
+                .then().log().everything()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    @ExpectedDatabase(value = "/dbunit/cardDataAfterDelete.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
+    public void shouldDeleteCardSuccessfully() {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .when().delete("/cards/{id}", 2)
+                .then().log().everything()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    @ExpectedDatabase(value = "/dbunit/cardData.xml",
+            assertionMode = DatabaseAssertionMode.NON_STRICT)
+    public void shouldFailToDeleteCardBecauseNoCardFoundWithId() {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON.toString())
+                .when().delete("/cards/{id}", 3)
+                .then().log().everything()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 }

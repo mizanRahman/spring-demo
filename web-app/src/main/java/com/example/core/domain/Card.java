@@ -17,6 +17,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Card extends BaseEntity {
 
     @Column(name = "pan", unique = true, nullable = false, length = 19)
@@ -28,4 +29,32 @@ public class Card extends BaseEntity {
     @Column(name = "expiry_date")
     @Temporal(TemporalType.DATE)
     private Date expiryDate;
+
+    public static Setter setter(Card card) {
+        return new Setter(card);
+    }
+
+    public static class Setter {
+
+        Card card;
+
+        public Setter(Card card) {
+            this.card = card;
+        }
+
+        public Setter pan(String pan) {
+            card.pan = pan;
+            return this;
+        }
+
+        public Setter balance(long balance) {
+            card.balance = balance;
+            return this;
+        }
+
+        public Setter expiryDate(Date expiryDate) {
+            card.expiryDate = expiryDate;
+            return this;
+        }
+    }
 }

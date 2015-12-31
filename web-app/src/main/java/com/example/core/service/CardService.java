@@ -9,8 +9,14 @@ import java.util.List;
  */
 public interface CardService {
 
-    Card save(Card card);
+    Card create(Card card);
+
+    Card findOne(long id);
 
     List<Card> findAll();
+
+    Card update(Card card);
+
+    void delete(Card card);
 
 }

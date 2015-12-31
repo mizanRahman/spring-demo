@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/cardData.xml",
+@DatabaseSetup(value = "/dbunit/cardData.xml",
         type = DatabaseOperation.CLEAN_INSERT)
 public class CardEndPointIntegrationTests {
 
@@ -55,7 +55,7 @@ public class CardEndPointIntegrationTests {
     }
 
     @Test
-    @ExpectedDatabase(value = "/cardData.xml",
+    @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() throws Exception {
         mockMvc.perform(get("/cards"))
@@ -65,7 +65,7 @@ public class CardEndPointIntegrationTests {
 
 
     @Test
-    @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
+    @ExpectedDatabase(value = "/dbunit/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldSaveNewCard() throws Exception {
 

@@ -26,12 +26,21 @@ public class CommonExceptionHandler {
     @ResponseBody
     public ApiError exception(HttpServletRequest request,
                               DataIntegrityViolationException exception) {
+        logError(request, exception, exception.getMostSpecificCause().getMessage());
+        return ApiError.builder()
+                .errorCode("23232")
+                .message("error while database operation")
+                .status("error")
+                .build();
+    }
 
-        log.warn("api error @{} {} : {}",
-                request.getMethod(),
-                request.getRequestURI(),
-                exception.getMostSpecificCause().getMessage(),
-                exception);
+    @ExceptionHandler(value = ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ApiError exception(HttpServletRequest request,
+                              ResourceNotFoundException exception) {
+
+        logError(request, exception);
 
         return ApiError.builder()
                 .errorCode("23232")
@@ -39,4 +48,18 @@ public class CommonExceptionHandler {
                 .status("error")
                 .build();
     }
+
+    private void logError(HttpServletRequest request, Exception exception) {
+        logError(request, exception, exception.getMessage());
+    }
+
+
+    private void logError(HttpServletRequest request, Exception exception, String message) {
+        log.warn("api error @{} {} : {}",
+                request.getMethod(),
+                request.getRequestURI(),
+                message,
+                exception);
+    }
+
 }

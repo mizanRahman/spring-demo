@@ -4,7 +4,7 @@ apply plugin: 'findbugs'
 
 
 pmd {
-    ignoreFailures =true
+    ignoreFailures = true
     ruleSetFiles = files('config/pmd/ruleSet.xml')
 }
 
@@ -22,7 +22,7 @@ pmd {
 //}
 
 tasks.withType(FindBugs) {
-    ignoreFailures =true
+    ignoreFailures = true
 
     reports {
         xml.enabled = false

@@ -1,8 +1,8 @@
 package com.example.unit;
 
+import com.example.SpringDemoApplication;
 import com.example.core.domain.Card;
 import com.example.core.repository.CardRepository;
-import com.example.SpringDemoApplication;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
@@ -32,14 +32,14 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-@DatabaseSetup("/cardData.xml")
+@DatabaseSetup("/dbunit/cardData.xml")
 public class CardRepositoryTests {
 
     @Autowired
     private CardRepository cardRepository;
 
     @Test
-    @ExpectedDatabase(value = "/cardDataAfterAdd.xml",
+    @ExpectedDatabase(value = "/dbunit/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void savetest() {
         Card card = Card.builder()

@@ -1,8 +1,8 @@
 package com.example.unit;
 
 import com.example.SpringDemoApplication;
-import com.example.core.repository.CardRepository;
 import com.example.core.domain.Card;
+import com.example.core.repository.CardRepository;
 import com.example.core.service.CardService;
 import com.example.core.service.CardServiceImpl;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class CardServiceTests {
 
         Card card = Card.builder().balance(212).pan("374632786").build();
 
-        Card savedCard = cardService.save(card);
+        Card savedCard = cardService.create(card);
 
         verify(cardRepository, times(1)).save(card);
         assertThat(savedCard.getId(), is(notNullValue()));
