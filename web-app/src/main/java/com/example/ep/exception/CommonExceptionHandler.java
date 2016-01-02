@@ -1,5 +1,9 @@
 package com.example.ep.exception;
 
+import com.example.core.domain.errorcode.Components;
+import com.example.core.domain.errorcode.ErrorCodes;
+import com.example.core.domain.errorcode.ReasonCodes;
+import com.example.core.domain.errorcode.Subjects;
 import com.example.ep.model.ApiError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -34,13 +38,19 @@ public class CommonExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(value = ResourceNotFoundException.class)
+    @ExceptionHandler(value = DomainException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ApiError exception(HttpServletRequest request,
-                              ResourceNotFoundException exception) {
+                              DomainException exception) {
 
         logError(request, exception);
+        String error = ErrorCodes.getCode(Components.CP, exception.getFeatureCode(), exception.getReasonCode());
+        ApiError.builder()
+                .errorCode(error)
+                .message(ErrorCodes.getMessage(error))
+                .status("error")
+                .build();
 
         return ApiError.builder()
                 .errorCode("23232")

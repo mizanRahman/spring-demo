@@ -1,7 +1,11 @@
 package com.example.ep.controller;
 
 import com.example.core.domain.Card;
+import com.example.core.domain.errorcode.ReasonCodes;
+import com.example.core.domain.errorcode.Subjects;
 import com.example.core.service.CardService;
+import com.example.ep.exception.DomainException;
+import com.example.ep.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +44,12 @@ public class CardEndPoint {
                 .balance(card.getBalance())
                 .expiryDate(card.getExpiryDate());
 
-        return cardService.update(cardToUpdate);
+        try {
+            return cardService.update(cardToUpdate);
+
+        } catch (ResourceNotFoundException e) {
+            throw new DomainException(ReasonCodes.NO_RESULT, Subjects.MAP.Add_Card, e.getMessage(), e);
+        }
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
