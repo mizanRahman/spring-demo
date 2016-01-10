@@ -3,9 +3,14 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
 
+
 environments:
     dev:
+        url: http://dev.bar.com
         name: Developer Setup
     prod:
         url: http://foo.bar.com
         name: My Cool App
+
+logging:
+  level: debug

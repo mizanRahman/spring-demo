@@ -3,6 +3,7 @@ package com.example.ep.controller;
 import com.example.config.ConnectionSettings;
 import com.example.core.domain.Card;
 import com.example.core.service.CardService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,10 @@ public class CardEndPoint {
 
     @Autowired
     private ConnectionSettings settings;
+
+    @Autowired
+    private ObjectMapper mapper;
+
 
     @RequestMapping
     public List<Card> findAll() {
