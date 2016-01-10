@@ -26,7 +26,6 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SpringApplicationConfiguration(classes = SpringDemoApplication.class)
-@ActiveProfiles("test")
 public class CardServiceTests {
 
     @Mock

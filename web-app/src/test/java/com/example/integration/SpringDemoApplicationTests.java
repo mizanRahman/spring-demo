@@ -12,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringApplicationConfiguration(
         classes = SpringDemoApplication.class)
 @WebAppConfiguration
-@ActiveProfiles("test")
 public class SpringDemoApplicationTests {
 
     @Test

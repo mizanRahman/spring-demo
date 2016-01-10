@@ -37,7 +37,6 @@ import static org.hamcrest.Matchers.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(SpringDemoApplication.class)
 @WebIntegrationTest
-@ActiveProfiles("test")
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
@@ -46,8 +45,6 @@ import static org.hamcrest.Matchers.*;
 @DatabaseSetup(value = "/dbunit/cardData.xml",
         type = DatabaseOperation.CLEAN_INSERT)
 public class UserEndPointIntegrationTests {
-
-    private static String UNUSED = "3212312";
 
     @Autowired
     private WebApplicationContext context;

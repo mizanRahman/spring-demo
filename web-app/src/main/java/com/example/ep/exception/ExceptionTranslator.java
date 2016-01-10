@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ControllerAdvice
 @Slf4j
-public class CommonExceptionHandler {
+public class ExceptionTranslator {
 
     /**
      * Handle exceptions thrown by handlers.

@@ -1,5 +1,6 @@
 package com.example.ep.controller;
 
+import com.example.config.ConnectionSettings;
 import com.example.core.domain.Card;
 import com.example.core.service.CardService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,13 @@ public class CardEndPoint {
     @Autowired
     private CardService cardService;
 
+    @Autowired
+    private ConnectionSettings settings;
+
     @RequestMapping
     public List<Card> findAll() {
         List<Card> cards = cardService.findAll();
+        settings.getDev();
         log.info("total {} cards found", cards.size());
         return cards;
     }

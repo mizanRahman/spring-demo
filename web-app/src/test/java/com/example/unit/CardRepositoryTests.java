@@ -25,8 +25,6 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(
         classes = SpringDemoApplication.class)
-@ActiveProfiles("test")
-
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
