@@ -1,0 +1,2 @@
+INSERT INTO cards(id, created, updated, version, balance, expiry_date, pan) VALUES (1, '2016-01-10 22:25:22', '2016-01-10 22:25:31', 0, 90, '2016-01-13', '465124523674563');
+INSERT INTO cards(id, created, updated, version, balance, expiry_date, pan) VALUES (2, '2016-01-10 22:26:42', '2016-01-10 22:26:43', 0, 21, '2016-01-10', '31323131212321');

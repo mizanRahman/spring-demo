@@ -7,23 +7,17 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"
+
     }
 }
-
-//plugins {
-//    id "org.flywaydb.flyway" version "3.2"
-//}
-
-//flyway {
-//    url = 'jdbc:h2:mem:testdb'
-//    user = 'sa'
-//}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
+apply plugin: 'org.flywaydb.flyway'
 
 jar {
     baseName = 'demo'
