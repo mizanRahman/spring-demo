@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpStatus;
@@ -47,9 +48,13 @@ public class UserEndPointIntegrationTests {
     @Autowired
     private WebApplicationContext context;
 
+    @Value("${local.server.port}")
+    int port;
+
     @Before
     public void before() {
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        RestAssured.port = port;
         RestAssuredMockMvc.mockMvc(mockMvc);
     }
 
