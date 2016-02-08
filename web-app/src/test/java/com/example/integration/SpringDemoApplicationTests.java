@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringApplicationConfiguration(
         classes = SpringDemoApplication.class)
 @WebAppConfiguration
-@WebIntegrationTest
+@WebIntegrationTest(randomPort = true)
 public class SpringDemoApplicationTests {
 
     @Test
