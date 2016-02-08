@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringApplicationConfiguration(
         classes = SpringDemoApplication.class)
 @WebAppConfiguration
-@WebIntegrationTest({"server.port=0", "management.port=0"})
+@WebIntegrationTest
 public class SpringDemoApplicationTests {
 
     @Test

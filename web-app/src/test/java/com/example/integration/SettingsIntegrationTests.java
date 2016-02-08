@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(SpringDemoApplication.class)
-@WebIntegrationTest({"server.port=0", "management.port=0"})
+@WebIntegrationTest
 public class SettingsIntegrationTests {
 
 
