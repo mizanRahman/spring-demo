@@ -32,5 +32,8 @@ dependencies {
 
 }
 
+task functionalTest( type: Test ) {
+    include 'src/**/test/**'
+}
 
-
+test.onlyIf {false}
