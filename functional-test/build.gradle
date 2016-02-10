@@ -18,9 +18,7 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-core:1.3"
     testRuntime "cglib:cglib-nodep:3.1"
     testRuntime "org.objenesis:objenesis:2.1"
-
     testRuntime "com.h2database:h2:1.4.182"
-
 
     testCompile "org.codehaus.groovy.modules.http-builder:http-builder:0.7"
 
@@ -29,11 +27,22 @@ dependencies {
     }
     // if you don't already have slf4j in the classpath, add this!
     testCompile 'org.slf4j:slf4j-api:1.7.13'
+    testCompile 'ch.qos.logback:logback-classic:1.1.2'
 
 }
+test {
 
-task functionalTest( type: Test ) {
-    include 'src/**/test/**'
+}
+task ftest(type: Test) {
+    testLogging {
+        showStandardStreams = true
+
+    }
+    doFirst {
+        println("=====================================")
+        println("Running functional tests")
+        println("=====================================")
+    }
 }
 
-test.onlyIf {false}
+test.onlyIf { false }
