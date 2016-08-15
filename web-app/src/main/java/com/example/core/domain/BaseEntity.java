@@ -16,7 +16,6 @@ public abstract class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @JsonIgnore
     private Long id;
 
     @Column(name = "created")

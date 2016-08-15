@@ -31,10 +31,17 @@ public class CardEndPoint {
     @RequestMapping
     public List<Card> findAll() {
         List<Card> cards = cardService.findAll();
-        settings.getDev();
         log.info("total {} cards found", cards.size());
         return cards;
     }
+
+    @RequestMapping(path = "/{id}")
+    public Card findOne(@PathVariable long id) {
+        Card card = cardService.findOne(id);
+        log.debug("card retrieved {}", card);
+        return card;
+    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody Card card) {

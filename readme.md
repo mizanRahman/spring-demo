@@ -1,3 +1,14 @@
+Features:
+=========
++ Card Endpoint with crud support
++ integration testing
++ unit testing
++ development database h2
++ populate database with db.sql and commandLineRunner
++ exception handling with controller advice
+
+
+
 # plans:
     - spring boot jpa
     - lombok
@@ -9,3 +20,8 @@
     - unit tests
     - functional test
     -
+
+
+
+# database url:
+url: jdbc:h2:mem:testdb

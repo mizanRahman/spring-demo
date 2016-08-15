@@ -52,7 +52,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
 
     runtime('com.h2database:h2')
-    compile('postgresql:postgresql:9.1-901-1.jdbc4')
+    //compile('postgresql:postgresql:9.1-901-1.jdbc4')
+
+    compile project(':demo-core')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.dbunit:dbunit:2.5.1')
