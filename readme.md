@@ -6,7 +6,8 @@ Features:
 + development database h2
 + populate database with db.sql and commandLineRunner
 + exception handling with controller advice
-
++ checkstyle, pmd, findbugs integration
++
 
 
 # plans:
