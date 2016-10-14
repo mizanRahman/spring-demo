@@ -27,7 +27,7 @@ apply plugin: 'spring-boot'
 
 jar {
     baseName = 'demo'
-    version = '0.0.1-SNAPSHOT'
+    version = '1.0'
 }
 
 sourceCompatibility = 1.8
@@ -72,4 +72,8 @@ dependencyManagement {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
+}
+
+springBoot {
+    executable = true
 }
