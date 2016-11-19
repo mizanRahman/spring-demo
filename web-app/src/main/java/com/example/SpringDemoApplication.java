@@ -13,13 +13,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Stream;
 
 @SpringBootApplication
+@EnableAsync
 //@ComponentScan(basePackages = {"com.example.core", "lib.demo.core"})
 public class SpringDemoApplication {
 
@@ -33,6 +36,11 @@ public class SpringDemoApplication {
         System.out.println("object mapper bean is created");
         return new ObjectMapper();
 
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return  new RestTemplate();
     }
 }
 

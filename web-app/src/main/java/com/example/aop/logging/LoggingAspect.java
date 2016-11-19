@@ -4,6 +4,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,12 +29,21 @@ public class LoggingAspect {
 
     @Around("loggingPointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        DateTime startTime = DateTime.now();
         log.info("Enter: {}.{}() with argument[s] = {}",
                 joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(),
                 Arrays.toString(joinPoint.getArgs()));
         try {
             Object result = joinPoint.proceed();
+
+            DateTime endTime = DateTime.now();
+            Duration duration = new Duration(startTime,endTime);
+            log.info("{}: response time in sec={}, in millis = {}",
+                    joinPoint.getSignature().getName(),
+                    duration.getStandardSeconds(),
+                    duration.getMillis());
+
             log.info("Exit: {}.{}() with result = {}",
                     joinPoint.getSignature().getDeclaringTypeName(),
                     joinPoint.getSignature().getName(),
