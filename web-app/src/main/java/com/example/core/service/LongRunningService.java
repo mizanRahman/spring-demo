@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +43,7 @@ public class LongRunningService {
         List<Integer> times = Arrays.asList(100,300, 20, 200, 7, 700, 3, 1000, 45, 377, 500);
         times.forEach(t -> {
             log.info("task: sleeptime={}, activeThreads={}, currentThread={}",
-                    t, Thread.activeCount(), Thread.currentThread().getId());
+                    t, Thread.activeCount(), Thread.currentThread());
             try {
                 Thread.sleep(t);
             } catch (InterruptedException e) {
@@ -54,14 +55,15 @@ public class LongRunningService {
 
 
     @Async
-    public Future<String> findGithubUser(String user) throws InterruptedException {
-        log.info("Looking up " + user);
-        String url = String.format("https://api.github.com/users/%s", user);
-        //User results = restTemplate.getForObject(url, User.class);
-        String results = restTemplate.getForObject("https://httpbin.org/get", String.class );
+    public Future<User> findGithubUser(String userName, DeferredResult<User> result) throws InterruptedException {
+        log.info("Looking up " + userName);
+        String url = String.format("https://api.github.com/users/%s", userName);
+        User user = restTemplate.getForObject(url, User.class);
+        result.setResult(user);
+
         // Artificial delay of 1s for demonstration purposes
         func();
-        return new AsyncResult<>(results);
+        return new AsyncResult<>(user);
     }
 
 }

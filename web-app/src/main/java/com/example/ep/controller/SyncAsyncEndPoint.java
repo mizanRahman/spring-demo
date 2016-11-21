@@ -5,12 +5,10 @@ import com.example.core.service.LongRunningService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -45,23 +43,43 @@ public class SyncAsyncEndPoint {
 
 
     @RequestMapping("/long-polling")
-    @ResponseBody
-    public DeferredResult<String> quotes() throws InterruptedException, ExecutionException {
+    public DeferredResult<User> quotes() throws InterruptedException, ExecutionException {
 
-        final DeferredResult<String> result = new DeferredResult<String>(null, Collections.emptyList());
-
-        result.onCompletion(new Runnable() {
-            public void run() {
-                log.debug("long polling task completed, {}", result.getResult());
-            }
+        final DeferredResult<User> result = new DeferredResult<>();
+        longRunningService.findGithubUser("mizanRahman", result);
+        result.onCompletion(() -> {
+            log.info("deferred result completed, threadCount={}, currentThread={}",
+                    Thread.activeCount(), Thread.currentThread());
         });
 
-        String user = longRunningService.findGithubUser("mizanRahman").get();
-        if (user != null) {
-            result.setResult(user);
-        }
-
+        log.info("returning deferred result, threadCount={}, currentThread={}",
+                Thread.activeCount(), Thread.currentThread());
         return result;
     }
+
+    @RequestMapping("/long-polling2")
+    public CompletableFuture<User> quotes1() throws InterruptedException, ExecutionException {
+
+        CompletableFuture<User> f = CompletableFuture.supplyAsync(()->{
+            try {
+                log.info("long work started, threadCount={}, currentThread={}",
+                        Thread.activeCount(), Thread.currentThread());
+                longRunningService.bigTask();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            User u= new User();
+            u.setBlog("dfs");
+            return u;
+
+        });
+
+
+        log.info("returning from controller, threadCount={}, currentThread={}",
+                Thread.activeCount(), Thread.currentThread());
+
+        return f;
+    }
+
 
 }
