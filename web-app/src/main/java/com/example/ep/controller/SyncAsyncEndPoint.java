@@ -60,7 +60,7 @@ public class SyncAsyncEndPoint {
     @RequestMapping("/long-polling2")
     public CompletableFuture<User> quotes1() throws InterruptedException, ExecutionException {
 
-        CompletableFuture<User> f = CompletableFuture.supplyAsync(()->{
+        CompletableFuture<User> f = CompletableFuture.supplyAsync(() -> {
             try {
                 log.info("long work started, threadCount={}, currentThread={}",
                         Thread.activeCount(), Thread.currentThread());
@@ -68,7 +68,7 @@ public class SyncAsyncEndPoint {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            User u= new User();
+            User u = new User();
             u.setBlog("dfs");
             return u;
 
@@ -79,6 +79,22 @@ public class SyncAsyncEndPoint {
                 Thread.activeCount(), Thread.currentThread());
 
         return f;
+    }
+
+    @RequestMapping("/long-polling3")
+    public DeferredResult<User> quotes3() throws InterruptedException, ExecutionException {
+
+        final DeferredResult<User> result = new DeferredResult<>();
+
+        longRunningService
+                .getObservableUser("mizanRahman")
+                .subscribe(user -> result.setResult(user), e -> result.setErrorResult(e))
+        ;
+
+        log.info("returning from controller, threadCount={}, currentThread={}",
+                Thread.activeCount(), Thread.currentThread());
+
+        return result;
     }
 
 
