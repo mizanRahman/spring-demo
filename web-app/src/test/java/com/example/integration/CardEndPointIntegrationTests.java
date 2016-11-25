@@ -1,6 +1,7 @@
 package com.example.integration;
 
 import com.example.SpringDemoApplication;
+import com.example.ep.config.EndPoint;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -43,6 +43,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
         type = DatabaseOperation.CLEAN_INSERT)
 public class CardEndPointIntegrationTests {
 
+
     @Autowired
     private WebApplicationContext wac;
 
@@ -57,7 +58,7 @@ public class CardEndPointIntegrationTests {
     @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() throws Exception {
-        mockMvc.perform(get("/cards"))
+        mockMvc.perform(get(EndPoint.CARDS.fullPath()))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
@@ -69,7 +70,7 @@ public class CardEndPointIntegrationTests {
     public void shouldSaveNewCard() throws Exception {
 
         mockMvc.perform(
-                post("/cards")
+                post(EndPoint.CARDS.fullPath())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"pan\": \"3352732138298\",\n" +
@@ -84,7 +85,7 @@ public class CardEndPointIntegrationTests {
 
 
         mockMvc.perform(
-                post("/cards")
+                post(EndPoint.CARDS.fullPath())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"pan\": \"335273211412412412412421412412\",\n" +

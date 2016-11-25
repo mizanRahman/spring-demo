@@ -5,4 +5,9 @@ package com.example.ep.config;
  */
 public interface EndPointPaths {
     String CARDS = "/cards";
+    String A_CARD = "/cards/{id}";
+
+
+
+
 }

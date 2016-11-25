@@ -36,7 +36,7 @@ public class SpringDemoApplication {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new AuthenticationFilter());
         bean.setOrder(1);
-        bean.setUrlPatterns(Arrays.asList("/api/cards/*"));
+//        bean.setUrlPatterns(Arrays.asList("/api/cards/*"));
         return bean;
     }
 

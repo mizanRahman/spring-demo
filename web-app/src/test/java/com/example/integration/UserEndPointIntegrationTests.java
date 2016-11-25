@@ -2,6 +2,8 @@ package com.example.integration;
 
 import com.example.SpringDemoApplication;
 import com.example.core.domain.Card;
+import com.example.ep.config.EndPointPaths;
+import com.example.ep.config.EndPoint;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -63,7 +65,7 @@ public class UserEndPointIntegrationTests {
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() {
         RestAssured.when()
-                .get("/cards")
+                .get(EndPoint.CARDS.fullPath())
                 .then()
                 .log()
                 .everything()
@@ -84,7 +86,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().post("/cards")
+                .when().post(EndPoint.CARDS.fullPath())
                 .then().log().everything().statusCode(HttpStatus.OK.value());
     }
 
@@ -102,7 +104,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().post("/cards")
+                .when().post(EndPoint.CARDS.fullPath())
                 .then().log().everything()
                 .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
     }
@@ -120,7 +122,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().post("/cards")
+                .when().post(EndPoint.CARDS.fullPath())
                 .then().log().everything()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
@@ -140,7 +142,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().put("/cards/{id}", 1)
+                .when().put(EndPointPaths.A_CARD, 1)
                 .then().log().everything()
                 .statusCode(HttpStatus.OK.value());
     }
@@ -152,7 +154,7 @@ public class UserEndPointIntegrationTests {
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
-                .when().delete("/cards/{id}", 2)
+                .when().delete(EndPointPaths.A_CARD, 2)
                 .then().log().everything()
                 .statusCode(HttpStatus.OK.value());
     }
@@ -164,7 +166,7 @@ public class UserEndPointIntegrationTests {
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
-                .when().delete("/cards/{id}", 3)
+                .when().delete(EndPointPaths.A_CARD, 3)
                 .then().log().everything()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }

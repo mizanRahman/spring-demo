@@ -5,10 +5,10 @@ package com.example.ep.config;
  */
 public enum EndPoint {
 
-    Cards(Paths.CARDS),
-    ACard(Paths.A_CARD);
+    Cards(Path.CARDS),
+    ACard(Path.A_CARD);
 
-    public interface Paths {
+    public interface Path {
         public final String CARDS = "/cards";
         public final String A_CARD = "/cards/{id}";
     }

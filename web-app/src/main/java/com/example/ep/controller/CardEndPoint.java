@@ -3,6 +3,7 @@ package com.example.ep.controller;
 import com.example.config.ConnectionSettings;
 import com.example.core.domain.Card;
 import com.example.core.service.CardService;
+import com.example.ep.config.EndPoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,13 @@ import java.util.List;
  * Created by mac on 11/28/15.
  */
 @RestController
-@RequestMapping("/cards")
+@RequestMapping(EndPoint.Path.CARDS)
 @Slf4j
 public class CardEndPoint {
 
     @Autowired
     private CardService cardService;
+
 
     @Autowired
     private ConnectionSettings settings;
@@ -30,6 +32,7 @@ public class CardEndPoint {
 
     @RequestMapping
     public List<Card> findAll() {
+
         List<Card> cards = cardService.findAll();
         log.info("total {} cards found", cards.size());
         return cards;
