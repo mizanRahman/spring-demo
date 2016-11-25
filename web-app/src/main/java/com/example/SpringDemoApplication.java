@@ -3,6 +3,7 @@ package com.example;
 import com.example.config.RootConfig;
 import com.example.core.domain.Card;
 import com.example.core.repository.CardRepository;
+import com.example.ep.filter.AuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Stream;
 
@@ -29,8 +32,16 @@ public class SpringDemoApplication {
     }
 
     @Bean
+    FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean bean = new FilterRegistrationBean();
+        bean.setFilter(new AuthenticationFilter());
+        bean.setOrder(1);
+        bean.setUrlPatterns(Arrays.asList("/api/cards/*"));
+        return bean;
+    }
+
+    @Bean
     public ObjectMapper mapper() {
-        System.out.println("object mapper bean is created");
         return new ObjectMapper();
 
     }
