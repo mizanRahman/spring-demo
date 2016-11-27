@@ -57,6 +57,7 @@ public class CardEndPointIntegrationTests {
     @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() throws Exception {
+
         mockMvc.perform(get("/cards"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
@@ -81,7 +82,6 @@ public class CardEndPointIntegrationTests {
 
     @Test
     public void shouldReturnErrorJson() throws Exception {
-
 
         mockMvc.perform(
                 post("/cards")

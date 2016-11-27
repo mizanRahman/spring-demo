@@ -63,7 +63,7 @@ public class UserEndPointIntegrationTests {
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() {
         RestAssured.when()
-                .get("/cards")
+                .get("/api/cards")
                 .then()
                 .log()
                 .everything()
@@ -84,7 +84,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().post("/cards")
+                .when().post("/api/cards")
                 .then().log().everything().statusCode(HttpStatus.OK.value());
     }
 
@@ -102,7 +102,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().post("/cards")
+                .when().post("/api/cards")
                 .then().log().everything()
                 .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
     }
@@ -120,7 +120,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().post("/cards")
+                .when().post("/api/cards")
                 .then().log().everything()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
@@ -140,7 +140,7 @@ public class UserEndPointIntegrationTests {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
                 .body(card)
-                .when().put("/cards/{id}", 1)
+                .when().put("/api/cards/{id}", 1)
                 .then().log().everything()
                 .statusCode(HttpStatus.OK.value());
     }
@@ -152,7 +152,7 @@ public class UserEndPointIntegrationTests {
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
-                .when().delete("/cards/{id}", 2)
+                .when().delete("/api/cards/{id}", 2)
                 .then().log().everything()
                 .statusCode(HttpStatus.OK.value());
     }
@@ -164,7 +164,7 @@ public class UserEndPointIntegrationTests {
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON.toString())
-                .when().delete("/cards/{id}", 3)
+                .when().delete("/api/cards/{id}", 3)
                 .then().log().everything()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
