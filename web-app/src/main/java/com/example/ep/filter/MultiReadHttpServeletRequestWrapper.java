@@ -11,12 +11,12 @@ import java.io.*;
 /**
  * Created by mac on 11/27/16.
  */
-public class RequestWrapper extends HttpServletRequestWrapper {
+public class MultiReadHttpServeletRequestWrapper extends HttpServletRequestWrapper {
 
 
     private ByteArrayOutputStream cachedBytes = null;
 
-    public RequestWrapper(HttpServletRequest request) {
+    public MultiReadHttpServeletRequestWrapper(HttpServletRequest request) {
         super(request);
     }
 

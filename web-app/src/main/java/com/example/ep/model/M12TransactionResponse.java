@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class CouponInfo {
+public class M12TransactionResponse {
     private String barcodeNo;
     private String tokenNumber;
     private String komServiceId;

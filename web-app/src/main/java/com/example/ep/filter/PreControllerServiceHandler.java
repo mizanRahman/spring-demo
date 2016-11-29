@@ -2,6 +2,9 @@ package com.example.ep.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Interval;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,7 +20,7 @@ import java.security.MessageDigest;
  * Created by mac on 11/26/16.
  */
 @Slf4j
-public class AuthenticationFilter implements Filter {
+public class PreControllerServiceHandler implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -28,10 +31,17 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        MultiReadHttpServeletRequestWrapper multiReadHttpServeletRequestWrapper = new MultiReadHttpServeletRequestWrapper(httpRequest);
 
-        if (isAuthenticated(httpRequest)) {
-            chain.doFilter(httpRequest, response);
+        DateTime start = DateTime.now();
+        if (isAuthenticated(multiReadHttpServeletRequestWrapper)) {
+            chain.doFilter(multiReadHttpServeletRequestWrapper, response);
         }
+        DateTime end = DateTime.now();
+
+        org.joda.time.Duration duration = new Interval(start, end).toDuration();
+        log.info("duration = {}", duration.toString());
+
     }
 
     @Override
@@ -62,7 +72,7 @@ public class AuthenticationFilter implements Filter {
                                     MessageDigest.getInstance("SHA-256")
                                             .digest(
                                                     IOUtils.toByteArray(
-                                                            new RequestWrapper(httpRequest).getInputStream()))))
+                                                            new MultiReadHttpServeletRequestWrapper(httpRequest).getInputStream()))))
                     .toString();
 
             log.info("String to Sign = {} ", stringToSign);

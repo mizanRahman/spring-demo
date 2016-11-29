@@ -2,7 +2,7 @@ package com.example;
 
 import com.example.core.domain.Card;
 import com.example.core.repository.CardRepository;
-import com.example.ep.filter.AuthenticationFilter;
+import com.example.ep.filter.PreControllerServiceHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,6 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Date;
 
 @SpringBootApplication
@@ -26,7 +25,7 @@ public class SpringDemoApplication {
     @Bean
     FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean bean = new FilterRegistrationBean();
-        bean.setFilter(new AuthenticationFilter());
+        bean.setFilter(new PreControllerServiceHandler());
 //        bean.addUrlPatterns("/cards/*");
         bean.setOrder(1);
         return bean;
