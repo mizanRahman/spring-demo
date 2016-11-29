@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.Date;
 
@@ -22,12 +24,12 @@ public class SpringDemoApplication {
         SpringApplication.run(SpringDemoApplication.class, args);
     }
 
-    @Bean
-    FilterRegistrationBean filterRegistrationBean() {
+    @Bean(name = "preControllerServiceHandlerRegister")
+    FilterRegistrationBean preControllerServiceHandler() {
         FilterRegistrationBean bean = new FilterRegistrationBean();
-        bean.setFilter(new PreControllerServiceHandler());
-//        bean.addUrlPatterns("/cards/*");
-        bean.setOrder(1);
+        bean.setFilter(new DelegatingFilterProxy());
+        bean.setName("preControllerServiceHandle");
+        bean.setOrder(2);
         return bean;
     }
 
