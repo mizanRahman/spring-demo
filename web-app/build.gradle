@@ -51,6 +51,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-devtools")
 
+    // spring integration for tcp
+    compile(
+//            "org.springframework.boot:spring-boot-starter-integration",
+            "org.springframework.integration:spring-integration-ip"
+    )
+
     runtime('com.h2database:h2')
     //compile('postgresql:postgresql:9.1-901-1.jdbc4')
 

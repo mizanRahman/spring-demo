@@ -37,3 +37,9 @@ Features:
 
 # database url:
 url: jdbc:h2:mem:testdb
+
+
+
+#### spring integration
+
+gateway--> channel--> tcp outbounf gateway --> externl tcp server

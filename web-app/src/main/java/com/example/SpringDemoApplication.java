@@ -1,28 +1,23 @@
 package com.example;
 
-import com.example.config.RootConfig;
 import com.example.core.domain.Card;
 import com.example.core.repository.CardRepository;
 import com.example.ep.filter.AuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.stream.Stream;
 
 @SpringBootApplication
+@ImportResource("classpath:META-INF/tcp.config.xml")
 //@ComponentScan(basePackages = {"com.example.core", "lib.demo.core"})
 public class SpringDemoApplication {
 
