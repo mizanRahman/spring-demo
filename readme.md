@@ -19,7 +19,7 @@ Features:
     - database migrations
     - unit tests
     - functional test
-    - transform this projest into a skeleton framework
+    - transform this project into a skeleton framework
         - it can be used in new projects so that common things are ready
         - best practices will be included
             - common Utilities design
@@ -37,3 +37,13 @@ Features:
 
 # database url:
 url: jdbc:h2:mem:testdb
+
+
+## tasks
+- add Hmac authentication
+- spring integration
+- revise skeleton for m12
+- database configuration
+- structure of package
+- ISO builder
+-

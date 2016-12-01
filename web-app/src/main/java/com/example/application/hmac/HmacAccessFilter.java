@@ -3,7 +3,6 @@ package com.example.application.hmac;
 import com.example.ep.filter.CachingRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -26,16 +25,20 @@ public class HmacAccessFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        CachingRequestWrapper requestWrapper = authenticate(request, response);
+        if (requestWrapper == null) return;
+        filterChain.doFilter(requestWrapper, response);
+    }
 
-        log.info("inside hmac access filter");
+    private CachingRequestWrapper authenticate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final AuthHeader authHeader = HmacUtil.getAuthHeader(request);
-
+        log.info("inside hmac access filter: authHeader={}", authHeader);
 
         if (authHeader == null) {
             // invalid authorization token
-            logger.warn("Authorization header is missing");
+            log.warn("Authorization header is missing");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+            return null;
         }
 
         final String apiKey = authHeader.getApiKey();
@@ -43,34 +46,31 @@ public class HmacAccessFilter extends OncePerRequestFilter {
         final byte[] apiSecret = credentialsProvider.getApiSecret(apiKey);
         if (apiSecret == null) {
             // invalid digest
-            logger.error("Invalid API key");
+            log.error("Invalid API key");
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid authorization data");
-            return;
+            return null;
         }
 
         CachingRequestWrapper requestWrapper = new CachingRequestWrapper(request);
         final byte[] contentAsByteArray = requestWrapper.getContentAsByteArray();
 
+
         final HmacSignatureBuilder signatureBuilder = new HmacSignatureBuilder()
-                .algorithm(authHeader.getScheme())
                 .scheme(request.getScheme())
-                .host(request.getServerName() + ":" + request.getServerPort())
                 .method(request.getMethod())
-                .resource(request.getRequestURI())
+                .uri(request.getRequestURI())
+                .queryString(request.getQueryString())
                 .contentType(request.getContentType())
-                .date(request.getHeader(HttpHeaders.DATE))
-                .apiKey(apiKey)
                 .apiSecret(apiSecret)
                 .payload(contentAsByteArray);
 
         if (!signatureBuilder.isHashEquals(authHeader.getSignature())) {
             // invalid digest
-            logger.error("Invalid digest");
+            log.error("Invalid digest, should be: {}", signatureBuilder.buildAsBase64String());
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid authorization data");
-            return;
+            return null;
         }
-
-        filterChain.doFilter(requestWrapper, response);
+        return requestWrapper;
     }
 }
 

@@ -15,7 +15,6 @@ import java.io.IOException;
  * Created by mac on 11/26/16.
  */
 @Slf4j
-@Component("preControllerServiceHandle")
 public class PreControllerServiceHandler implements Filter {
 
 
