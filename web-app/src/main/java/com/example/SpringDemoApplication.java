@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.application.hmac.HmacAccessFilter;
 import com.example.core.domain.Card;
 import com.example.core.repository.CardRepository;
 import com.example.ep.filter.PreControllerServiceHandler;
@@ -24,14 +25,20 @@ public class SpringDemoApplication {
         SpringApplication.run(SpringDemoApplication.class, args);
     }
 
-    @Bean(name = "preControllerServiceHandlerRegister")
-    FilterRegistrationBean preControllerServiceHandler() {
-        FilterRegistrationBean bean = new FilterRegistrationBean();
-        bean.setFilter(new DelegatingFilterProxy());
-        bean.setName("preControllerServiceHandle");
-        bean.setOrder(2);
-        return bean;
+//    @Bean(name = "preControllerServiceHandlerRegister")
+//    FilterRegistrationBean preControllerServiceHandler() {
+//        FilterRegistrationBean bean = new FilterRegistrationBean();
+//        bean.setFilter(new DelegatingFilterProxy());
+//        bean.setName("preControllerServiceHandle");
+//        bean.setOrder(2);
+//        return bean;
+//    }
+
+    @Bean
+    HmacAccessFilter hmacFilter() {
+        return new HmacAccessFilter();
     }
+
 
     @Bean
     public ObjectMapper mapper() {

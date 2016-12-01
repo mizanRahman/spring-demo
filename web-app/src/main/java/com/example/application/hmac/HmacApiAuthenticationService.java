@@ -1,6 +1,7 @@
-package com.example.application.service;
+package com.example.application.hmac;
 
-import com.example.ep.filter.MultiReadHttpServeletRequestWrapper;
+import com.example.application.service.ApiAuthenticationService;
+import com.example.ep.filter.CachingRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class HmacApiAuthenticationService implements ApiAuthenticationService {
                                     MessageDigest.getInstance(PAYLOAD_DIGEST_ALGORITHM)
                                             .digest(
                                                     IOUtils.toByteArray(
-                                                            new MultiReadHttpServeletRequestWrapper(httpRequest).getInputStream()))))
+                                                            new CachingRequestWrapper(httpRequest).getInputStream()))))
                     .toString();
 
             log.info("String to Sign = {} ", stringToSign);

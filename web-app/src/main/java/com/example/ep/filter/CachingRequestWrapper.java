@@ -11,12 +11,12 @@ import java.io.*;
 /**
  * Created by mac on 11/27/16.
  */
-public class MultiReadHttpServeletRequestWrapper extends HttpServletRequestWrapper {
+public class CachingRequestWrapper extends HttpServletRequestWrapper {
 
 
     private ByteArrayOutputStream cachedBytes = null;
 
-    public MultiReadHttpServeletRequestWrapper(HttpServletRequest request) {
+    public CachingRequestWrapper(HttpServletRequest request) {
         super(request);
     }
 
@@ -32,6 +32,14 @@ public class MultiReadHttpServeletRequestWrapper extends HttpServletRequestWrapp
     @Override
     public BufferedReader getReader() throws IOException {
         return new BufferedReader(new InputStreamReader(getInputStream()));
+    }
+
+    public byte[] getContentAsByteArray() {
+        try {
+            return IOUtils.toByteArray(this.getInputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     class CachedServletInputStream extends ServletInputStream {

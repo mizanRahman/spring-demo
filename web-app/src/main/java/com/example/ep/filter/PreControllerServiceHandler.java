@@ -1,13 +1,11 @@
 package com.example.ep.filter;
 
-import com.example.application.service.HmacApiAuthenticationService;
+import com.example.application.hmac.HmacApiAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -33,12 +31,13 @@ public class PreControllerServiceHandler implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        MultiReadHttpServeletRequestWrapper multiReadHttpServeletRequestWrapper = new MultiReadHttpServeletRequestWrapper(httpRequest);
+        CachingRequestWrapper cachingRequestWrapper = new CachingRequestWrapper(httpRequest);
 
         DateTime start = DateTime.now();
-        if (hmacApiAuthenticationService.isAuthenticated(multiReadHttpServeletRequestWrapper)) {
-            chain.doFilter(multiReadHttpServeletRequestWrapper, response);
+        if (hmacApiAuthenticationService.isAuthenticated(cachingRequestWrapper)) {
+            chain.doFilter(cachingRequestWrapper, response);
         }
+
         DateTime end = DateTime.now();
 
         org.joda.time.Duration duration = new Interval(start, end).toDuration();
