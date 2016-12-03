@@ -2,6 +2,7 @@ package com.example.core.repository;
 
 import com.example.core.domain.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  * Created by mac on 11/28/15.
