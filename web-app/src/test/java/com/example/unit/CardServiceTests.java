@@ -1,10 +1,10 @@
 package com.example.unit;
 
 import com.example.SpringDemoApplication;
-import com.example.core.domain.Card;
-import com.example.core.repository.CardRepository;
-import com.example.core.service.CardService;
-import com.example.core.service.CardServiceImpl;
+import com.example.domain.model.card.Card;
+import com.example.domain.model.card.CardRepository;
+import com.example.domain.service.CardService;
+import com.example.domain.service.CardServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,7 +14,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;

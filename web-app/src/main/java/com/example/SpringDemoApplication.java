@@ -1,8 +1,7 @@
 package com.example;
 
-import com.example.core.domain.Card;
-import com.example.core.repository.CardRepository;
-import com.example.ep.filter.PreControllerServiceHandler;
+import com.example.domain.model.card.Card;
+import com.example.domain.model.card.CardRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.Date;
@@ -22,21 +20,6 @@ public class SpringDemoApplication {
     public static void main(String[] args) {
         System.out.println("running my application...");
         SpringApplication.run(SpringDemoApplication.class, args);
-    }
-
-    @Bean(name = "preControllerServiceHandlerRegister")
-    FilterRegistrationBean preControllerServiceHandler() {
-        FilterRegistrationBean bean = new FilterRegistrationBean();
-        bean.setFilter(new DelegatingFilterProxy());
-        bean.setName("preControllerServiceHandle");
-        bean.setOrder(2);
-        return bean;
-    }
-
-    @Bean
-    public ObjectMapper mapper() {
-        return new ObjectMapper();
-
     }
 }
 

@@ -1,13 +1,11 @@
 package com.example.ep.filter;
 
-import com.example.application.service.HmacApiAuthenticationService;
+import com.example.application.impl.HmacApiAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
