@@ -18,7 +18,7 @@ apply plugin: 'spring-boot'
 
 
 jar {
-    baseName = 'demo'
+    baseName = 'external-partner-gateway'
     version = '1.0'
 }
 

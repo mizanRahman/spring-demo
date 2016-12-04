@@ -1,7 +1,7 @@
 package com.example.integration;
 
-import com.example.SpringDemoApplication;
-import com.example.domain.model.card.Card;
+import com.konasl.epg.SpringDemoApplication;
+import com.konasl.epg.domain.model.card.Card;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;

@@ -1,6 +1,6 @@
 package com.example.integration;
 
-import com.example.SpringDemoApplication;
+import com.konasl.epg.SpringDemoApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;

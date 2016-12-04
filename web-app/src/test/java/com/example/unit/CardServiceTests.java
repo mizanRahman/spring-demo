@@ -1,10 +1,10 @@
 package com.example.unit;
 
-import com.example.SpringDemoApplication;
-import com.example.domain.model.card.Card;
-import com.example.domain.model.card.CardRepository;
-import com.example.domain.service.CardService;
-import com.example.domain.service.CardServiceImpl;
+import com.konasl.epg.SpringDemoApplication;
+import com.konasl.epg.domain.model.card.Card;
+import com.konasl.epg.domain.model.card.CardRepository;
+import com.konasl.epg.domain.service.CardService;
+import com.konasl.epg.domain.service.impl.CardServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
