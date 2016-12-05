@@ -42,10 +42,4 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
         return new AsyncRestTemplate(apiGatewayRequestExecutor());
     }
 
-    // TODO: Opening following bean will enable hmac authentication. test cases will fail. need to update test cases.
-//    @Bean
-//    HmacAccessFilter hmacFilter() {
-//        return new HmacAccessFilter();
-//    }
-
 }
