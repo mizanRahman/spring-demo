@@ -1,7 +1,7 @@
-package com.konasl.epg.application.impl;
+package  com.konasl.epg.ep.security.hmac;
 
+import com.konasl.epg.ep.filter.CachingRequestWrapper;
 import com.konasl.epg.ep.security.ApiAuthenticationService;
-import com.konasl.epg.ep.filter.MultiReadHttpServeletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.security.MessageDigest;
 @Service
 public class HmacApiAuthenticationService implements ApiAuthenticationService {
 
-    public static final String AUTH_SCHEME = "KONA-HMAC-SHA266";
+    public static final String AUTH_SCHEME = "KONA-HMAC-SHA256";
     public static final String PAYLOAD_DIGEST_ALGORITHM = "SHA-256";
 
     @Override
@@ -44,7 +44,7 @@ public class HmacApiAuthenticationService implements ApiAuthenticationService {
                                     MessageDigest.getInstance(PAYLOAD_DIGEST_ALGORITHM)
                                             .digest(
                                                     IOUtils.toByteArray(
-                                                            new MultiReadHttpServeletRequestWrapper(httpRequest).getInputStream()))))
+                                                            new CachingRequestWrapper(httpRequest).getInputStream()))))
                     .toString();
 
             log.info("String to Sign = {} ", stringToSign);

@@ -1,6 +1,6 @@
 package com.konasl.epg.ep.filter;
 
-import com.konasl.epg.application.impl.HmacApiAuthenticationService;
+import com.konasl.epg.ep.security.hmac.HmacApiAuthenticationService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -18,7 +18,6 @@ import java.io.IOException;
 @Component("preControllerServiceHandle")
 public class PreControllerServiceHandler implements Filter {
 
-
     @Autowired
     HmacApiAuthenticationService hmacApiAuthenticationService;
 
@@ -31,11 +30,11 @@ public class PreControllerServiceHandler implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        MultiReadHttpServeletRequestWrapper multiReadHttpServeletRequestWrapper = new MultiReadHttpServeletRequestWrapper(httpRequest);
+        CachingRequestWrapper cachingRequestWrapper = new CachingRequestWrapper(httpRequest);
 
         DateTime start = DateTime.now();
-        if (hmacApiAuthenticationService.isAuthenticated(multiReadHttpServeletRequestWrapper)) {
-            chain.doFilter(multiReadHttpServeletRequestWrapper, response);
+        if (hmacApiAuthenticationService.isAuthenticated(cachingRequestWrapper)) {
+            chain.doFilter(cachingRequestWrapper, response);
         }
         DateTime end = DateTime.now();
 
