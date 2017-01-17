@@ -7,13 +7,13 @@ Features:
 + populate database with db.sql and commandLineRunner
 + exception handling with controller advice
 + checkstyle, pmd, findbugs integration
++ lombok
+        - data
+        - log
 
 
 # plans:
     - spring boot jpa
-    - lombok
-        - data
-        - log
     - validation
     - persistence exceptions
     - database migrations

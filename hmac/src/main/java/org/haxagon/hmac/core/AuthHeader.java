@@ -1,4 +1,4 @@
-package com.example.application.hmac;
+package org.haxagon.hmac.core;
 
 import lombok.Data;
 import lombok.ToString;

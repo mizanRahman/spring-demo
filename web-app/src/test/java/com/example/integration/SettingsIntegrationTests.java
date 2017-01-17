@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(SpringDemoApplication.class)
 @WebIntegrationTest(randomPort = true)
+//TODO: it should be in integration test profile, not unit test profile
 public class SettingsIntegrationTests {
 
 

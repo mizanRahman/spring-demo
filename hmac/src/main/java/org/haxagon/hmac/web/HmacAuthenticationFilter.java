@@ -1,4 +1,4 @@
-//package com.example.application.hmac;
+//package org.haxagon.hmac.hmac;
 //
 //
 //import com.example.ep.filter.CachingRequestWrapper;

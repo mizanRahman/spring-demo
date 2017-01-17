@@ -1,4 +1,4 @@
-package com.example.ep.filter;
+package org.haxagon.hmac.web;
 
 import org.apache.commons.io.IOUtils;
 

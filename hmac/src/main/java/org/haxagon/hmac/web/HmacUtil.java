@@ -1,6 +1,7 @@
-package com.example.application.hmac;
+package org.haxagon.hmac.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.haxagon.hmac.core.AuthHeader;
 import org.springframework.http.HttpHeaders;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
  * Created by mac on 12/1/16.
  */
 @Slf4j
-class HmacUtil {
+public class HmacUtil {
 
     private static final Pattern AUTHORIZATION_HEADER_PATTERN = Pattern.compile("^(\\S+) (\\S+):([\\S]+)$");
 

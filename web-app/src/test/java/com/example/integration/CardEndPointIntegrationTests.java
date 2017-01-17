@@ -7,6 +7,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,4 @@ public class CardEndPointIntegrationTests {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
 }

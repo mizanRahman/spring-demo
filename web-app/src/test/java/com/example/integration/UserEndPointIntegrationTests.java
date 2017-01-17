@@ -29,6 +29,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by mac on 11/29/15.
@@ -82,12 +85,11 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
                 .when().post("/api/cards")
                 .then().log().everything().statusCode(HttpStatus.OK.value());
     }
-
 
     @Test
     @ExpectedDatabase(value = "/dbunit/cardData.xml",
@@ -100,11 +102,12 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
                 .when().post("/api/cards")
-                .then().log().everything()
-                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
+                .then()
+                .statusCode(is(both(greaterThan(399)).and(lessThan(500))))
+                .log().ifError();
     }
 
     @Test
@@ -118,13 +121,12 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
                 .when().post("/api/cards")
                 .then().log().everything()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
-
 
 
     @Test
@@ -138,7 +140,7 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
                 .when().put("/api/cards/{id}", 1)
                 .then().log().everything()
@@ -151,7 +153,7 @@ public class UserEndPointIntegrationTests {
     public void shouldDeleteCardSuccessfully() {
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().delete("/api/cards/{id}", 2)
                 .then().log().everything()
                 .statusCode(HttpStatus.OK.value());
@@ -163,7 +165,7 @@ public class UserEndPointIntegrationTests {
     public void shouldFailToDeleteCardBecauseNoCardFoundWithId() {
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON.toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().delete("/api/cards/{id}", 3)
                 .then().log().everything()
                 .statusCode(HttpStatus.NOT_FOUND.value());

@@ -50,16 +50,17 @@ dependencies {
     //compile('postgresql:postgresql:9.1-901-1.jdbc4')
 
 
+
     compile('org.projectlombok:lombok')
     compile('joda-time:joda-time')
     compile('commons-io:commons-io:2.4')
 
+    compile project(':hmac')
     compile project(':demo-core')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.dbunit:dbunit:2.5.1')
     testCompile('com.github.springtestdbunit:spring-test-dbunit:1.2.1')
-
     testCompile 'com.jayway.restassured:rest-assured:2.8.0'
     testCompile 'com.jayway.restassured:spring-mock-mvc:2.8.0'
 }

@@ -1,4 +1,4 @@
-package com.example.application.hmac;
+package org.haxagon.hmac.core;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SimpleCredentialsProvider implements CredentialsProvider {
 
-    private final Map<String, byte[]> secrets = new ConcurrentHashMap<>();
+    private final Map<String, byte[]> secrets = new ConcurrentHashMap<String, byte[]>();
 
     public SimpleCredentialsProvider() {
     }

@@ -21,12 +21,6 @@ public class CardEndPoint {
     @Autowired
     private CardService cardService;
 
-    @Autowired
-    private ConnectionSettings settings;
-
-    @Autowired
-    private ObjectMapper mapper;
-
 
     @RequestMapping
     public List<Card> findAll() {

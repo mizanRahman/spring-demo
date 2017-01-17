@@ -1,7 +1,5 @@
-spring:
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
-
+hmac:
+  enabled: false
 #spring.datasource.url : jdbc:h2:file:~/testdb
 #spring.datasource.username = sa
 #spring.datasource.password = sa

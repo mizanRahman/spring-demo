@@ -1,7 +1,9 @@
-package com.example.application.hmac;
+package org.haxagon.hmac.web;
 
-import com.example.ep.filter.CachingRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.haxagon.hmac.core.AuthHeader;
+import org.haxagon.hmac.core.CredentialsProvider;
+import org.haxagon.hmac.core.HmacSignatureBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,7 +15,7 @@ import java.io.IOException;
 
 /**
  * Restricts access to resource if HMAC signature is not valid.
- * <p>
+ * <p/>
  * This filter does not provide Spring SecurityContext down to filter chain.
  */
 @Slf4j
@@ -22,11 +24,22 @@ public class HmacAccessFilter extends OncePerRequestFilter {
     @Autowired
     private CredentialsProvider credentialsProvider;
 
+    private HmacProperties hmacProperties;
+
+    public HmacAccessFilter(HmacProperties hmacProperties) {
+        this.hmacProperties = hmacProperties;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        HttpServletRequest requestWrapper;
+        if (hmacProperties.isEnabled()) {
+            requestWrapper = authenticate(request, response);
+            if (requestWrapper == null) return;
+        } else {
+            requestWrapper = request;
+        }
 
-        CachingRequestWrapper requestWrapper = authenticate(request, response);
-        if (requestWrapper == null) return;
         filterChain.doFilter(requestWrapper, response);
     }
 
@@ -55,8 +68,8 @@ public class HmacAccessFilter extends OncePerRequestFilter {
         final byte[] contentAsByteArray = requestWrapper.getContentAsByteArray();
 
 
-        final HmacSignatureBuilder signatureBuilder = new HmacSignatureBuilder()
-                .scheme(request.getScheme())
+        final HmacSignatureBuilder signatureBuilder = HmacSignatureBuilder.buulder()
+//                .scheme(request.getScheme())
                 .method(request.getMethod())
                 .uri(request.getRequestURI())
                 .queryString(request.getQueryString())
