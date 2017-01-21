@@ -1,5 +1,6 @@
 package com.example.unit;
 
+import com.example.DatabaseSeed;
 import com.example.SpringDemoApplication;
 import com.example.core.domain.Card;
 import com.example.core.repository.CardRepository;
@@ -36,6 +37,7 @@ public class CardServiceTests {
 
 
     @Test
+    @DatabaseSeed(locations = {"oracle", "mongodb"})
     public void saveTest() {
         when(cardRepository.save(Mockito.any(Card.class)))
                 .thenAnswer(new Answer<Card>() {

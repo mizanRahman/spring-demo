@@ -1,76 +1,35 @@
 package com.example.integration;
 
-import com.example.SpringDemoApplication;
+import com.example.common.AbstractIntegrationTest;
 import com.example.core.domain.Card;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
+import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by mac on 11/29/15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(SpringDemoApplication.class)
-@WebIntegrationTest(randomPort = true)
-@TestExecutionListeners({
-        DependencyInjectionTestExecutionListener.class,
-        DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
-@DatabaseSetup(value = "/dbunit/cardData.xml",
-        type = DatabaseOperation.CLEAN_INSERT)
-public class UserEndPointIntegrationTests {
-
-    @Autowired
-    private WebApplicationContext context;
-
-    @Value("${local.server.port}")
-    int port;
-
-    @Before
-    public void before() {
-        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-        RestAssured.port = port;
-        RestAssuredMockMvc.mockMvc(mockMvc);
-    }
+@DatabaseSetup(value = "/dbunit/cardData.xml", type = DatabaseOperation.CLEAN_INSERT)
+public class UserEndPointIntegrationTests extends AbstractIntegrationTest {
 
     @Test
     @ExpectedDatabase(value = "/dbunit/cardData.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldReturn200OK() {
-        RestAssured.when()
-                .get("/api/cards")
+        given()
+                .when()
+                .get("/cards")
                 .then()
-                .log()
-                .everything()
                 .statusCode(HttpStatus.OK.value());
+
     }
 
 
@@ -85,10 +44,11 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
-                .when().post("/api/cards")
-                .then().log().everything().statusCode(HttpStatus.OK.value());
+                .when()
+                .post("/cards")
+                .then()
+                .statusCode(HttpStatus.OK.value());
     }
 
     @Test
@@ -102,12 +62,11 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
-                .when().post("/api/cards")
+                .when()
+                .post("/cards")
                 .then()
-                .statusCode(is(both(greaterThan(399)).and(lessThan(500))))
-                .log().ifError();
+                .statusCode(is(both(greaterThan(399)).and(lessThan(500))));
     }
 
     @Test
@@ -121,10 +80,10 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
-                .when().post("/api/cards")
-                .then().log().everything()
+                .when()
+                .post("/cards")
+                .then()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
 
@@ -140,10 +99,10 @@ public class UserEndPointIntegrationTests {
 
         RestAssured
                 .given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(card)
-                .when().put("/api/cards/{id}", 1)
-                .then().log().everything()
+                .when()
+                .put("/cards/{id}", 1)
+                .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -152,10 +111,9 @@ public class UserEndPointIntegrationTests {
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldDeleteCardSuccessfully() {
         RestAssured
-                .given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().delete("/api/cards/{id}", 2)
-                .then().log().everything()
+                .when()
+                .delete("/cards/{id}", 2)
+                .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
@@ -164,10 +122,9 @@ public class UserEndPointIntegrationTests {
             assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void shouldFailToDeleteCardBecauseNoCardFoundWithId() {
         RestAssured
-                .given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().delete("/api/cards/{id}", 3)
-                .then().log().everything()
+                .when()
+                .delete("/cards/{id}", 3)
+                .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
 }
