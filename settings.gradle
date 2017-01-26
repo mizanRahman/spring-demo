@@ -1,0 +1,7 @@
+include 'web-app'
+include 'client-sdk'
+include 'functional-test'
+include 'demo-core'
+include 'hmac'
+
+

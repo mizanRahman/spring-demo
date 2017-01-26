@@ -1,0 +1,21 @@
+hmac:
+  enabled: false
+#spring.datasource.url : jdbc:h2:file:~/testdb
+#spring.datasource.username = sa
+#spring.datasource.password = sa
+#spring.datasource.driverClassName = org.h2.Driver
+
+
+environments:
+    dev:
+        url: http://dev.bar.com
+        name: Developer Setup
+    prod:
+        url: http://foo.bar.com
+        name: My Cool App
+
+logging:
+  level: debug
+
+server:
+  context-path: /api
