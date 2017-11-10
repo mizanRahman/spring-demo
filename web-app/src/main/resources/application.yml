@@ -14,8 +14,6 @@ environments:
         url: http://foo.bar.com
         name: My Cool App
 
-logging:
-  level: debug
-
 server:
   context-path: /api
+

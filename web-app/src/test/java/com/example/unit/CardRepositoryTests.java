@@ -46,4 +46,6 @@ public class CardRepositoryTests {
                 .build();
         cardRepository.saveAndFlush(card);
     }
+
+
 }

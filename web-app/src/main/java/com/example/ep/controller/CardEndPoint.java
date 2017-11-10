@@ -1,10 +1,9 @@
 package com.example.ep.controller;
 
-import com.example.config.ConnectionSettings;
 import com.example.core.domain.Card;
 import com.example.core.service.CardService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,4 +64,14 @@ public class CardEndPoint {
         return Card.builder().build();
     }
 
+
+    @RequestMapping("/test")
+    public Card saveTest() {
+        Card card = Card.builder()
+                .balance(2131231)
+                .expiryDate(DateTime.now().toDate())
+                .pan("1234567890")
+                .build();
+        return cardService.create(card);
+    }
 }

@@ -36,12 +36,16 @@ class InitialRunner implements CommandLineRunner {
     @Autowired
     private CardRepository cardRepository;
 
+
     @Override
     public void run(String... args) throws Exception {
+
         cardRepository.save(Card.builder().balance(10).pan("3333").expiryDate(new Date()).build());
         cardRepository.save(Card.builder().balance(20).pan("3334").expiryDate(new Date()).build());
         cardRepository.save(Card.builder().balance(30).pan("3335").expiryDate(new Date()).build());
         cardRepository.save(Card.builder().balance(40).pan("3336").expiryDate(new Date()).build());
         cardRepository.save(Card.builder().balance(50).pan("3337").expiryDate(new Date()).build());
+
+
     }
 }
