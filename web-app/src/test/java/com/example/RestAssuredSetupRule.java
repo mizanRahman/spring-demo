@@ -25,9 +25,6 @@ public class RestAssuredSetupRule extends ExternalResource {
         this.context = context;
     }
 
-
-
-
     @Override
     protected void before() {
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
@@ -46,9 +43,5 @@ public class RestAssuredSetupRule extends ExternalResource {
         MatcherConfig matcherConfig = RestAssured.config().getMatcherConfig()
                 .errorDescriptionType(MatcherConfig.ErrorDescriptionType.HAMCREST);
         RestAssured.config().matcherConfig(matcherConfig);
-
-
     }
-
-
 }

@@ -33,6 +33,7 @@ public class UserEndPointIntegrationTests extends AbstractIntegrationTest {
     }
 
 
+
     @Test
     @ExpectedDatabase(value = "/dbunit/cardDataAfterAdd.xml",
             assertionMode = DatabaseAssertionMode.NON_STRICT)

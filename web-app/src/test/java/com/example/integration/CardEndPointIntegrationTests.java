@@ -4,6 +4,7 @@ import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
